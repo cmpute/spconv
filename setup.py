@@ -1,6 +1,7 @@
 import os
 import re
 import sys
+import glob
 import platform
 import subprocess
 import torch
@@ -80,6 +81,18 @@ class CMakeBuild(build_ext):
             os.makedirs(self.build_temp)
         print("|||||CMAKE ARGS|||||", cmake_args)
         subprocess.check_call(['cmake', ext.sourcedir] + cmake_args, cwd=self.build_temp, env=env)
+
+        # tweak cuda install location
+        build_make_file = glob.glob("build/temp*/src/spconv/CMakeFiles/spconv.dir/build.make")[0]
+        link_file = glob.glob("build/temp*/src/spconv/CMakeFiles/spconv.dir/link.txt")[0]
+
+        for file in [build_make_file, link_file]:
+
+            with open(file) as f:
+                newText = f.read().replace('/usr/local/cuda', env['CUDA_HOME'])
+            with open(file, "w") as f:
+                f.write(newText)
+
         subprocess.check_call(['cmake', '--build', '.'] + build_args, cwd=self.build_temp)
 
 
