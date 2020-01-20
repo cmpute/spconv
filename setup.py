@@ -47,9 +47,10 @@ class CMakeBuild(build_ext):
                       '-DPYBIND11_PYTHON_VERSION={}'.format(PYTHON_VERSION),
                       '-DSPCONV_BuildTests=OFF',
                       ] #  -arch=sm_61
-        if not torch.cuda.is_available():
-            cmake_args += ['-DSPCONV_BuildCUDA=OFF']
-        else:
+        # if not torch.cuda.is_available():
+        #     cmake_args += ['-DSPCONV_BuildCUDA=OFF']
+        # else:
+        if True: # Force CUDA building
             cuda_flags = ["\"--expt-relaxed-constexpr\""]
             # must add following flags to use at::Half
             # but will remove raw half operators.
@@ -85,8 +86,9 @@ class CMakeBuild(build_ext):
         # tweak cuda install location
         build_make_file = glob.glob("build/temp*/src/spconv/CMakeFiles/spconv.dir/build.make")[0]
         link_file = glob.glob("build/temp*/src/spconv/CMakeFiles/spconv.dir/link.txt")[0]
+        dlink_file = glob.glob("build/temp*/src/spconv/CMakeFiles/spconv.dir/dlink.txt")[0]
 
-        for file in [build_make_file, link_file]:
+        for file in [build_make_file, link_file, dlink_file]:
 
             with open(file) as f:
                 newText = f.read().replace('/usr/local/cuda', env['CUDA_HOME'])

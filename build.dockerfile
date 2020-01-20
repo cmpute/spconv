@@ -17,7 +17,8 @@ RUN conda create -n workspace python=3.6 && \
     conda install -n workspace -y pytorch==1.3 torchvision cudatoolkit=9.2 -c pytorch && \
     conda install -n workspace -y cudatoolkit-dev cudnn -c conda-forge
 
-# Use patched version of spconv
+# Use patched version of spconv from my github
+# or you can do COPY . /spconv
 RUN git clone --recursive https://github.com/cmpute/spconv.git
 
 ENV PATH=$PATH:/opt/conda/envs/workspace/bin
@@ -26,4 +27,5 @@ ENV CUDA_HOME=/opt/conda/envs/workspace
 RUN cd spconv && /opt/conda/envs/workspace/bin/python setup.py bdist_wheel
 
 # To extract the generated wheel
-# docker cp <built-container>:/spconv/dist <target-location>
+# docker create --name temp spconv
+# docker cp temp:/spconv/dist <target-location>
