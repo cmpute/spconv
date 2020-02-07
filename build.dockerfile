@@ -14,8 +14,8 @@ RUN wget https://github.com/Kitware/CMake/releases/download/v3.15.6/cmake-3.15.6
 
 # install pytorch and cuda
 RUN conda create -n workspace python=3.6 && \
-    conda install -n workspace -y pytorch==1.3 torchvision cudatoolkit=9.2 -c pytorch && \
-    conda install -n workspace -y cudatoolkit-dev cudnn -c conda-forge
+    conda install -n workspace -y pytorch=1.3 torchvision cudatoolkit=9.2 -c pytorch && \
+    conda install -n workspace -y cudatoolkit-dev=9.2 cudnn -c conda-forge
 
 # Use patched version of spconv from my github
 # or you can do COPY . /spconv
