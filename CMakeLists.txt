@@ -18,6 +18,10 @@ if(CMAKE_BUILD_TYPE STREQUAL "Debug")
 endif()
 
 find_package(Torch REQUIRED)
+get_target_property(TORCH_INTERFACE_LIB torch INTERFACE_LINK_LIBRARIES)
+string(REPLACE "/usr/local/cuda" ${CUDA_TOOLKIT_ROOT_DIR} TORCH_INTERFACE_LIB "${TORCH_INTERFACE_LIB}")
+set_target_properties(torch PROPERTIES INTERFACE_LINK_LIBRARIES ${TORCH_INTERFACE_LIB})
+
 # set(CMAKE_VERBOSE_MAKEFILE ON)
 if (SPCONV_BuildCUDA)
     set(CUDA_TOOLKIT_ROOT_DIR "${CMAKE_CUDA_COMPILER}")
@@ -48,7 +52,6 @@ if (SPCONV_BuildCUDA)
     add_subdirectory(src/cuhash)
 endif()
 add_subdirectory(src/spconv)
-add_subdirectory(src/utils)
 
 if (SPCONV_BuildTests)
     include(CTest) #adds option BUILD_TESTING (default ON)
