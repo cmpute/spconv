@@ -1,6 +1,6 @@
-set(ALL_FILES all.cc indice.cc reordering.cc maxpool.cc nms.cc)
+set(ALL_FILES all.cc indice.cc reordering.cc maxpool.cc)
 if (SPCONV_BuildCUDA)
-    set(ALL_FILES ${ALL_FILES} indice.cu reordering.cu maxpool.cu pillar_scatter.cu)
+    set(ALL_FILES ${ALL_FILES} indice.cu reordering.cu maxpool.cu)
 endif()
 add_library(spconv SHARED ${ALL_FILES})
 

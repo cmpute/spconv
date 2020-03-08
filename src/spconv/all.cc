@@ -15,9 +15,7 @@
 #include <torch/script.h>
 #include <spconv/pool_ops.h>
 #include <spconv/spconv_ops.h>
-#include <spconv/pillar_scatter_ops.h>
 #include <spconv/fused_spconv_ops.h>
-#include <spconv/nms_ops.h>
 
 static auto registry =
     torch::RegisterOperators()
@@ -38,7 +36,4 @@ static auto registry =
             &spconv::indiceMaxPoolBackward<float>)
         .op("spconv::indice_maxpool_half", &spconv::indiceMaxPool<at::Half>)
         .op("spconv::indice_maxpool_backward_half",
-            &spconv::indiceMaxPoolBackward<at::Half>)
-        .op("spconv::nms", &spconv::nonMaxSuppression<float>)
-        .op("spconv::pillar_scatter_float", &spconv::pointPillarScatter<float>)
-        .op("spconv::pillar_scatter_half", &spconv::pointPillarScatter<at::Half>);
+            &spconv::indiceMaxPoolBackward<at::Half>);
