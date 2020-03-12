@@ -12,7 +12,6 @@ if(NOT WIN32)
     set_property(TARGET cuhash PROPERTY POSITION_INDEPENDENT_CODE ON)
 endif()
 target_link_libraries(cuhash PRIVATE ${ALL_LIBS})
-install (TARGETS cuhash DESTINATION lib)
 
 if (SPCONV_BuildTests)
     add_executable(cuhash_test main.cc)

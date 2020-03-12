@@ -12,12 +12,9 @@
 # See the License for the specific language governing permissions and
 # limitations under the License.
 
-from pathlib import Path
-
-import platform
+import os, platform
 import numpy as np
 import torch
-from spconv import utils
 from spconv.conv import SparseConv2d, SparseConv3d, SubMConv2d, SubMConv3d
 from spconv.conv import SparseConvTranspose2d, SparseConvTranspose3d
 from spconv.conv import SparseInverseConv2d, SparseInverseConv3d
@@ -29,7 +26,7 @@ from spconv import ops
 _LIB_FILE_NAME = "libspconv.so"
 if platform.system() == "Windows":
     _LIB_FILE_NAME = "spconv.dll"
-_LIB_PATH = str(Path(__file__).parent / _LIB_FILE_NAME)
+_LIB_PATH = os.path.join(os.path.dirname(__file__), _LIB_FILE_NAME)
 torch.ops.load_library(_LIB_PATH)
 
 def scatter_nd(indices, updates, shape):
