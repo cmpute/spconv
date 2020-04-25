@@ -40,7 +40,6 @@ if (SPCONV_BuildCUDA)
     add_compile_definitions(SPCONV_CUDA)
 endif()
 # add_definitions(-D_GLIBCXX_USE_CXX11_ABI=0)
-add_subdirectory(third_party/pybind11)
 
 set(ALL_LIBS ${TORCH_LIBRARIES}) 
 
