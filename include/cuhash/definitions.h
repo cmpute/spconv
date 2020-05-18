@@ -58,7 +58,7 @@ inline void PrintMessage(const char *message, const bool error = false) {
 //! Prints a message out to the console.
 inline void PrintMessage(const char *message, const bool error = false) {
   if (error) {
-    printf("cudahash: %s\n", message);
+    fprintf(stderr, "cudahash: %s\n", message);
   } else {
     printf("%s\n", message);
   }
